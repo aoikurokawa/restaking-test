@@ -164,7 +164,7 @@ async fn main() -> anyhow::Result<(), anyhow::Error> {
             .await?;
 
         let slot = rpc_client.get_slot().await.context("get slot")?;
-        let epoch = get_epoch(slot, config.epoch_length()).unwrap();
+        let epoch = get_epoch(slot, 32).unwrap();
 
         info!("Checking for vaults to update. Slot: {slot}, Current Epoch: {epoch}");
 
@@ -175,7 +175,7 @@ async fn main() -> anyhow::Result<(), anyhow::Error> {
             .into_iter()
             .filter(|(_pubkey, vault)| {
                 vault
-                    .is_update_needed(slot, config.epoch_length())
+                    .is_update_needed(slot, 32)
                     .expect("Config epoch length is 0")
             })
             .collect();
