@@ -1,35 +1,109 @@
-# Vault Setup
+# Jito Staking Manager (JSM)
 
-Restaking config: 4vvKh3Ws4vGzgXRVdo8SdL4jePXDvCqKVmi21BCBGwvn
-Vault config: UwuSgAq4zByffCGCrWH87DsjfsewYjuqHfJEpzw1Jq3
-TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+[![Build Status](https://github.com/jito-foundation/restaking/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/jito-foundation/restaking/actions)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![codecov](https://codecov.io/gh/jito-foundation/restaking/branch/master/graph/badge.svg?token=Q28COAGZ89)](https://codecov.io/gh/jito-foundation/restaking)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-## Start Ledger
+Jito Restaking is a next-generation restaking platform for Solana and SVM environments.
 
+## Table of Contents
 
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Running Tests](#running-tests)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- Universal framework for staking, restaking, and liquid restaking
+- VRT construction and management
+- Flexible NCN and operator management
+
+## SDKs
+
+We provide TypeScript SDKs for interacting with the Jito Restaking system:
+
+- 📦 [`@jito-foundation/restaking-sdk`](https://www.npmjs.com/package/@jito-foundation/restaking-sdk) – TypeScript SDK for interacting with the Jito Restaking program.
+- 📦 [`@jito-foundation/vault-sdk`](https://www.npmjs.com/package/@jito-foundation/vault-sdk) – TypeScript SDK for interacting with the Jito Vault program.
+
+## Installation
+
+```bash
+git clone https://github.com/jito-foundation/restaking.git
+cd restaking
+cargo-build-sbf
 ```
-solana-test-validator \
-    --clone TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA \
-    --clone ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL \
-    --clone-upgradeable-program RestkWeAVL8fRGgzhfeoqFhsqKRchg6aa1XrcH96z4Q \
-    --clone-upgradeable-program Vau1t6sLNxnzB7ZDsef8TLbPLfyZMYXH8WTNqUdm9g8 \
-    --clone 4vvKh3Ws4vGzgXRVdo8SdL4jePXDvCqKVmi21BCBGwvn \
-    --clone UwuSgAq4zByffCGCrWH87DsjfsewYjuqHfJEpzw1Jq3 \
-    --url mainnet-beta \
-    --slots-per-epoch 32 \
-    --reset
+
+## Usage
+
+### Quickstart
+
+To create a vault, mint vrt, and delegate to an operator, follow this [guide](cli/getting_started.md).
+
+### Building the software
+
+```bash
+cargo-build-sbf
 ```
 
-## Create NCN
+### Building the IDLs and client code
 
+```bash
+# Build the shank CLI tool
+cargo b --release -p jito-shank-cli && ./target/release/jito-shank-cli
+# Generate the client code
+yarn generate-clients
+# Rebuild the entire project
+cargo b --release
 ```
-cargo r -p jito-tip-router-cli -- create-test-ncn --rpc-url "http://localhost:8899"
+
+## Running Tests
+
+If you haven't installed `cargo-nextest` yet, it's recommended to install it.
+You find the installation instructions [here](https://nexte.st/docs/installation/from-source/).
+
+### Outside of SVM
+
+```bash
+cargo nextest run
 ```
 
+### Testing using the SVM environment
+
+```bash
+cargo-build-sbf && SBF_OUT_DIR=$(pwd)/target/sbf-solana-solana/release cargo nextest run --all-features
+```
+
+## Releasing
+
+```bash
+./release
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+- Fork the project
+- Create your feature branch (git checkout -b username/feature_name)
+- Commit your changes (git commit -m 'Add some feature')
+- Push to the branch (git push origin username/feature_name)
+- Open a Pull Request
+
+## Security Audits
+
+| Group    | Date       | Commit                                                                 |
+|----------|------------|------------------------------------------------------------------------|
+| Offside  | 2024-11-20 | [60b3884](security_audits/offside_jito_vault_audit.pdf)                |
+| Ottersec | 2024-10-25 | [f04242f](security_audits/ottersec_jito_restaking_audit.pdf)           |
+| Certora  | 2024-10-29 | [ecbe19a](security_audits/certora_jito_restaking_vault_audit_v1.pdf)   |
+| Certora  | 2024-12-23 | [3fdcd88](security_audits/certora_jito_restaking_vault_audit_v2.pdf)   |
+
+## License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 
-
-## Resources
-
-- [PsyOptions Documentation](https://docs.psyoptions.io/)
-- [PsyOptions Github](https://github.com/mithraiclabs/psyoptions)
