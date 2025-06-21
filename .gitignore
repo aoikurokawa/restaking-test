@@ -10,3 +10,7 @@ test-ledger
 .env
 
 Cargo.lock
+
+# Added by cargo
+
+/target
