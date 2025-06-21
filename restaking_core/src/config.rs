@@ -4,10 +4,7 @@ use bytemuck::{Pod, Zeroable};
 use jito_bytemuck::{types::PodU64, AccountDeserialize, Discriminator};
 use jito_restaking_sdk::error::RestakingError;
 use shank::ShankAccount;
-use solana_program::{
-    account_info::AccountInfo, clock::DEFAULT_SLOTS_PER_EPOCH, msg, program_error::ProgramError,
-    pubkey::Pubkey,
-};
+use solana_program::{account_info::AccountInfo, msg, program_error::ProgramError, pubkey::Pubkey};
 
 const RESERVED_SPACE_LEN: usize = 263;
 
@@ -43,7 +40,7 @@ impl Config {
         Self {
             admin,
             vault_program,
-            epoch_length: PodU64::from(DEFAULT_SLOTS_PER_EPOCH),
+            epoch_length: PodU64::from(32),
             ncn_count: PodU64::from(0),
             operator_count: PodU64::from(0),
             bump,

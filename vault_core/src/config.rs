@@ -9,10 +9,7 @@ use jito_bytemuck::{
 };
 use jito_vault_sdk::error::VaultError;
 use shank::ShankAccount;
-use solana_program::{
-    account_info::AccountInfo, epoch_schedule::DEFAULT_SLOTS_PER_EPOCH, msg,
-    program_error::ProgramError, pubkey::Pubkey,
-};
+use solana_program::{account_info::AccountInfo, msg, program_error::ProgramError, pubkey::Pubkey};
 
 use crate::MAX_BPS;
 
@@ -78,7 +75,7 @@ impl Config {
         Self {
             admin,
             restaking_program,
-            epoch_length: PodU64::from(DEFAULT_SLOTS_PER_EPOCH),
+            epoch_length: PodU64::from(32),
             num_vaults: PodU64::from(0),
             // Cannot be higher than 100%
             deposit_withdrawal_fee_cap_bps: PodU16::from(Self::DEFAULT_FEES_CAP_BPS),
